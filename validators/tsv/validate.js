@@ -6,11 +6,13 @@ const validate = (
   fileList,
   tsvs,
   events,
-  participants,
-  phenotypeParticipants,
+  //participants,
+  //phenotypeParticipants,
   stimuli,
 ) => {
   let issues = []
+  let participants = []
+  let phenotypeParticipants = []
   // validate tsv
   const tsvPromises = files.map(function(file) {
     return new Promise(resolve => {
@@ -36,15 +38,11 @@ const validate = (
           ) {
             if (participantList) {
               if (file.name.endsWith('participants.tsv')) {
-                participants = {
-                  list: participantList,
-                  file: file,
-                }
+                //console.log('Participants!: ' + participantList)
+                participants.push(participantList)
               } else if (file.relativePath.includes('phenotype/')) {
-                phenotypeParticipants.push({
-                  list: participantList,
-                  file: file,
-                })
+                //console.log('Phenotype Participants!: ' + participantList)
+                phenotypeParticipants.push(participantList)
               }
             }
             if (stimFiles && stimFiles.length) {
@@ -63,7 +61,16 @@ const validate = (
   })
 
   return new Promise(resolve =>
-    Promise.all(tsvPromises).then(() => resolve(issues)),
+    Promise.all(tsvPromises).then(() => {
+      const results = {
+        issues: issues,
+        participants: participants,
+        phenotypeParticipants: phenotypeParticipants,
+      }
+      //console.log('Participants (in promise): ' + JSON.stringify(participants))
+      //console.log('In Phenotype Particpipants (in promise): ' + JSON.stringify(phenotypeParticipants))
+      resolve(results)
+    }),
   )
 }
 

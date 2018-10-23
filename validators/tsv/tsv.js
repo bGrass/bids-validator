@@ -142,8 +142,8 @@ const TSV = (file, contents, fileList, callback) => {
 
     // create full dataset path list
     const pathList = []
-    for (let f in fileList) {
-      pathList.push(fileList[f].relativePath)
+    for (let f of Object.keys(fileList)) {
+      pathList.push(f.relativePath)
     }
 
     // check for stimuli file

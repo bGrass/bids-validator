@@ -208,4 +208,15 @@ describe('BIDS example datasets ', function() {
       isdone()
     })
   })
+
+  it('checks for missing participants in participant.tsv files or folder structure', function(isdone) {
+    var options = { ignoreNiftiHeaders: true }
+    validate.BIDS('tests/data/fieldmap_without_magnitude', options, function(
+      issues,
+    ) {
+      assert.deepEqual(issues.errors.length, 3)
+      assert.deepEqual(issues.errors[2], '49')
+      isdone()
+    })
+  })
 })

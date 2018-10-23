@@ -27,6 +27,7 @@ var issues = {
     var filteredIssueList = []
     var fieldmapRelatedCodes = [6, 7, 8, 9]
     for (var i = 0; i < issueList.length; i++) {
+      console.log('\nIssue keys: ' + Object.keys(issueList[i]))
       var issue = issueList[i]
       if (fieldmapRelatedCodes.indexOf(issue.code) < 0) {
         filteredIssueList.push(issue)
@@ -42,7 +43,6 @@ var issues = {
     var errors = [],
       warnings = [],
       ignored = []
-
     if (summary.modalities.indexOf('fieldmap') < 0) {
       issueList = this.filterFieldMaps(issueList)
     }
